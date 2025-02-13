@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 
 // importando Modelo
 const Usuario = require('../models/Usuario');
+const { usuarioExiste } = require('../helpers/db-validators');
 
 
 
@@ -61,6 +62,7 @@ const guardarUsuarios = async (req = request, res = response) => {
 const actualizarUsuarios = async(req = request, res = response) => {
 
   const { id }= req.params;
+
   const { _id, role, password, ...resto } = req.body;
   //validar password por base de datos
   
@@ -71,7 +73,7 @@ const actualizarUsuarios = async(req = request, res = response) => {
       resto.password = bcryptjs.hashSync(password, salt);
   
     }
-    const usuario = await Usuario.findByIdAndUpdate( id, resto );
+    const usuario = await Usuario.findByIdAndUpdate( id , resto );
     const usuarioUpdate = await Usuario.findById(id);
     
 
@@ -83,18 +85,19 @@ const actualizarUsuarios = async(req = request, res = response) => {
 }
 
 const borrandoUsuarios = async(req = request, res = response) => {
-  const { id }= req.params;
-  //borrado logico mediante estado 
-  const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
-
-
+  
   try {
-
-    res.json({ msg: 'Inabilitando  usuarios', usuario });
-  } catch (error) {
-    console.log(error)
-    res.json({ msg: error })
-  }
+    const { id  } = req.params;
+    const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
+    const  usuarioEliminado = await Usuario.findById(id);
+    //console.log(usuaiosAutenticado);
+    return res.json({
+       usuarioEliminado
+     
+    });
+}catch (error) {
+    console.log(error);         
+}
 }
 
 

@@ -1,7 +1,7 @@
 {
   "name": "app-votos",
   "version": "1.0.0",
-  "description": "app_votos_onleline",
+  "description": "app_votos_onleline, creada con fines cademicos no comerciales",
   "main": "app.js",
   "scripts": {
     "test": "npm start",
@@ -21,6 +21,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0"
   }
 }

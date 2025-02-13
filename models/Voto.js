@@ -1,9 +1,17 @@
 const { Schema, model } = require('mongoose');
 
 VotoSchema = Schema({
-  identity:{ type:String, required:[true, 'El documento de indetidad es requerido ']},
-  voto:{ type:String, required:[true, 'Su Voto es obligatorio para poder registrarlo']},
-  
-},{ timestamps: true });
+  identity: {
+    type: String,
+    unique: true,
+    required: [true, 'El documento de indetidad es requerido ']
+  },
+  candidatoId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Candidato',
+    required: true
+  },
 
-module.exports = model( 'Voto', VotoSchema );
+}, { timestamps: true });
+
+module.exports = model('Voto', VotoSchema);

@@ -4,12 +4,14 @@ const dbConnections = async () => {
 
   try {
 
-      await mongoose.connect( process.env.CONECCTION_BD);
-    // await mongoose.connect('mongodb://127.0.0.1:27017/bd-votosApp');
+     // await mongoose.connect( process.env.CONECCTION_BD);
+     await mongoose.connect('mongodb://localhost:27017/votos-local');
+  
       console.log('se conecto exitosamente');    
   } catch (error) {
-    console.log('no se  CONECTO');
+ 
     console.log(error);
+    console.log('no se  CONECTO');
     throw new Error('Error a  la hora de conectar la base de datos Votos');
 
   }

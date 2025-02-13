@@ -10,9 +10,11 @@ class Server {
       this.app = express();
       this.port = process.env.PORT || 5000;
       //rutas iniciales
+      this.authPath = '/api/auth';
       this.usuariosPath = '/api/usuarios';
-      //this.candidatosPath = '/api/candidatos';
-      //this.votosPath = '/api/votos';
+     
+      this.candidatosPath = '/api/candidatos';
+      this.votosPath = '/api/votos';
 
       //conectar BD
       this.conexionBD();
@@ -41,8 +43,9 @@ class Server {
     //llamando a las rutas
     routes(){
       this.app.use( this.usuariosPath, require('../routes/usuarios'));
-     // this.app.use( this.candidatosPath, require('../routes/candidatos'));
-     // this.app.use( this.votosPath, require('../routes/votos'));
+      this.app.use( this.authPath, require('../routes/auth'))
+      this.app.use( this.candidatosPath, require('../routes/candidatos'));
+      this.app.use( this.votosPath, require('../routes/votos'));
     }
     //levantando el servidor
 
