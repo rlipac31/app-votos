@@ -7,7 +7,7 @@ const { validarCampos } = require('../middleware/validar-campos');
 
 //helpers 
 const { validarDNILocal } = require('../helpers/regex');
-const { yaVoto } = require('../helpers/db-validators');
+const { yaVoto, canditatoExiste } = require('../helpers/db-validators');
 
 const { saveVotos, listarVotos, conteoVotos } = require('../controllers/votoController');
 
@@ -21,12 +21,13 @@ router.get('/total-votos', listarVotos );
 router.get('/result-votos', conteoVotos );
 
 router.post('/:candidatoId',[
+      check('candidatoId','el id del candidato esta en blanco').not().isEmpty(),
+      check('candidatoId',' no es un un candidato valido o no  existe el la  BD').isMongoId(),
+      check('candidatoId').custom(canditatoExiste),
       check('identity').custom(validarDNILocal),
       check('identity').custom(yaVoto),
-      check('candidatoId',' no es un un candidato valido o no  existe el la  BD').isMongoId(),
       validarCampos
     ],
-    
   saveVotos );
 
 

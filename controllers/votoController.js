@@ -53,9 +53,9 @@ const conteoVotos = async (req = request, res = response) => {
                 input: "$candidateDetails",
                 as: "candidate",
                 in: {// muesttra los datoss solicitados
-                  firstName: "$$candidate.name.firstName",
-                  paternalSurname: "$$candidate.surname.paternal_surname",
-                  candidateImageUrl: "$$candidate.candidate_imageUrl"
+                  firstName: "$$candidate.nameCandidato.firstName",
+                  paternalSurname: "$$candidate.surname.paternal",
+                  candidateImageUrl: "$$candidate.imagen.url"
                 }
               }
             },
@@ -66,38 +66,42 @@ const conteoVotos = async (req = request, res = response) => {
     }
   ])
 
+  let  votosCandidato = resultadoVotos.map(row=>row.totalVotes)
+  let nameCandidatos = resultadoVotos.map(row => row.candidateDetails.firstName)
 
 
-  res.status(200).json(resultadoVotos);
+  res.status(200).json({
+    votosCandidato,
+    nameCandidatos,
+    resultadoVotos
+
+  });
 
 
 }
 
-
 const saveVotos = async (req = request, res = response) => {
 
   const { candidatoId } = req.params;
-  const { identity } = req.body;
+  const { identity, localidad } = req.body;
 
-  const voto = new Voto({ identity, candidatoId });
+  const voto = new Voto({ identity, localidad, candidatoId });
 
   try {
 
     const votacion = await voto.save();
     if (votacion) {
-      res.json({
+    return  res.json({
         msg: 'Guaradar votacion corectamente',
         votacion
       });
     } else {
-      res.status(401).json({
+    return  res.status(401).json({
         msg: 'no se pudo guardar'
       })
     }
-
-
   } catch (error) {
-    console.log(error)
+  return  console.log(error)
     res.json({ msg: 'Error NO se guardo en la bd' })
   }
 }

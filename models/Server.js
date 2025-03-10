@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 
 const { dbConnections } = require('../database/config');
 
@@ -37,6 +39,8 @@ class Server {
           this.app.use(cors());
           //lectura y parseo del body
           this.app.use( express.json());
+          this.app.use(bodyParser.json());    
+          this.app.use(bodyParser.urlencoded({ extended: true }));
           //directorio publico
           this.app.use( express.static('public'));
     }

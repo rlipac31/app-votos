@@ -1,5 +1,6 @@
 const Usuario = require('../models/Usuario');
 const Voto = require('../models/Voto');
+const Candidato = require('../models/Candidate');
 
 
 
@@ -40,11 +41,21 @@ const yaVoto = async(identity)=>{
   }
 }
 
+const canditatoExiste = async(candidatoId) => {
+  //verificar si canditato existe con el id
+  const canditatoIdExiste = await Candidato.findById( candidatoId );
+  if(!canditatoIdExiste){
+    throw new Error(`el candidato  :  ${ id } no esta registrado en la BD`)
+  }
+  
+}
+
 
 module.exports = {
   emailYaExiste,
   usuarioExiste,
   usuarioStateFalse,
-  yaVoto
+  yaVoto,
+  canditatoExiste
  
 }
