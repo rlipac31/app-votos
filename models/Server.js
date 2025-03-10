@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 
 
 const { dbConnections } = require('../database/config');
-
-
-
 class Server {
     constructor(){
       this.app = express();
