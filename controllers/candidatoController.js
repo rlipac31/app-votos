@@ -2,15 +2,15 @@ const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer')
-const path = require('path');
+/* const path = require('path');
 const fs = require('fs');
 
 const publicDir = path.join(__dirname, 'public/uploads'); //correcionn para serviicio nube Render
 
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir);
-}
-const upload = multer({ dest: publicDir })
+} */
+const upload = multer({ dest: 'api/uploads' })
 
 cloudinary.config({
   cloud_name: 'rlipac',
