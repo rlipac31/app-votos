@@ -2,7 +2,7 @@ const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer')
-const upload = multer({ dest: '/public/uploads/' })
+const upload = multer({ dest: '/uploads/' })
 
 cloudinary.config({
   cloud_name: 'rlipac',
