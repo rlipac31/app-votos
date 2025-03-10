@@ -43,10 +43,10 @@ class Server {
     }
     //llamando a las rutas
     routes(){
-      this.app.use( this.usuariosPath, require('../routes/usuarios'));
-      this.app.use( this.authPath, require('../routes/auth'))
-      this.app.use( this.candidatosPath, require('../routes/candidatos'));
-      this.app.use( this.votosPath, require('../routes/votos'));
+      this.app.use( this.usuariosPath, require('../api/usuarios'));
+      this.app.use( this.authPath, require('../api/auth'))
+      this.app.use( this.candidatosPath, require('../api/candidatos'));
+      this.app.use( this.votosPath, require('../api/votos'));
     }
     //levantando el servidor
 
