@@ -2,7 +2,15 @@ const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer')
-const upload = multer({ dest: '/uploads/' })
+const path = require('path');
+const fs = require('fs');
+
+const publicDir = path.join(__dirname, 'public/uploads'); //correcionn para serviicio nube Render
+
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir);
+}
+const upload = multer({ dest: publicDir })
 
 cloudinary.config({
   cloud_name: 'rlipac',
@@ -46,10 +54,10 @@ const listarCandidatos = async (req = request, res = response) => {
 
 const guardarCandidatos = async (req = request, res = response) => {
 
-      if (!req.file) {
-       return res.status(401).send('Error: Tipo de archivo no permitido.');
-    }
-    console.log(req.file); // Aquí deberías obtener el archivo
+  if (!req.file) {
+    return res.status(401).send('Error: Tipo de archivo no permitido.');
+  }
+  console.log(req.file); // Aquí deberías obtener el archivo
 
 
   try {
@@ -163,11 +171,11 @@ const actualizarCandidato = async (req = request, res = response) => {
   const { id } = req.params;
   console.log(id + ' el id =>');
   const { _id, ...resto } = req.body;
-  console.log( req.body)
+  console.log(req.body)
 
   //validar password por base de datos
 
- 
+
   try {
 
     const candidato = await Candidato.findByIdAndUpdate(id, resto);
@@ -178,41 +186,41 @@ const actualizarCandidato = async (req = request, res = response) => {
     console.log(error)
     res.json({ msg: error })
   }
-} 
-const imgePartidoCandidatoUpdate = async(req= request, res = response )=>{
-  const { originalname, path } = req.file;
- if (!req.file) {
-  return res.status(401).send('Error: Tipo de archivo no permitido.');
 }
-console.log(' req.file: ',req.file); // Aquí deberías obtener el archivo
+const imgePartidoCandidatoUpdate = async (req = request, res = response) => {
+  const { originalname, path } = req.file;
+  if (!req.file) {
+    return res.status(401).send('Error: Tipo de archivo no permitido.');
+  }
+  console.log(' req.file: ', req.file); // Aquí deberías obtener el archivo
 
-    // Upload an image
-    const uploadResult = await cloudinary.uploader
-      .upload(
-        path, {
-        public_id: originalname,
-      }
-      )
-      .catch((error) => {
-        console.log('Error uploadResult: ', error);
-      });
-
-    // Optimize delivery by resizing and applying auto-format and auto-quality
-    const optimizeUrl = cloudinary.url(uploadResult.url, {
-      transformation: [
-        {
-          quality: 'auto'
-        },
-        {
-          fetch_format: 'auto'
-        }
-      ]
-    });
- 
-     const political_party = {
-      imagUrl: optimizeUrl,
-    
+  // Upload an image
+  const uploadResult = await cloudinary.uploader
+    .upload(
+      path, {
+      public_id: originalname,
     }
+    )
+    .catch((error) => {
+      console.log('Error uploadResult: ', error);
+    });
+
+  // Optimize delivery by resizing and applying auto-format and auto-quality
+  const optimizeUrl = cloudinary.url(uploadResult.url, {
+    transformation: [
+      {
+        quality: 'auto'
+      },
+      {
+        fetch_format: 'auto'
+      }
+    ]
+  });
+
+  const political_party = {
+    imagUrl: optimizeUrl,
+
+  }
 }
 
 
