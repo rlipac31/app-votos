@@ -8,7 +8,8 @@ Este backend permite a los usuarios crear encuestas, votar en ellas y ver los re
 
 **Imagen del Frontend:**
 
-![Imagen del Frontend]('https://res.cloudinary.com/rlipac/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_25_style_light_align_center:Shop%20Now,w_0.5,y_0.18/v1743039674/votos_degbfu.png')  
+![Imagen del Frontend]('https://res.cloudinary.com/rlipac/image/upload/v1743039674/votos_degbfu.png')  
+
 
 ## Características Principales
 

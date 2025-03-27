@@ -33,7 +33,7 @@ router.post('/', [
   check('name').custom(validarNombreUsuario),
   check('email').custom(emailYaExiste),
   // check('password').custom(validarContrasena),
-  check('password', 'el password es oblligatorio y tiene que tener al menos 6 caracteres').isLength({ min: 6 }),
+  check('password', 'el password es obligatorio y tiene que tener al menos 6 caracteres').isLength({ min: 6 }),
   check('role', 'rol no valido').isIn(['ADMIN', 'COLABORADOR']),
   validarCampos
 ], guardarUsuarios);
