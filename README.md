@@ -8,7 +8,7 @@ Este backend permite a los usuarios crear encuestas, votar en ellas y ver los re
 
 **Imagen del Frontend:**
 
-![Imagen del Frontend App-Votar]('https://res.cloudinary.com/rlipac/image/upload/v1743039674/votos_degbfu.png')  
+![Imagen del Frontend App-Votar]("https://res.cloudinary.com/rlipac/image/upload/v1743039674/votos_degbfu.png")  
 
 
 ## Características Principales
