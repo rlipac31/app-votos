@@ -48,11 +48,11 @@ router.put('/:id', [
 ], actualizarUsuarios);
 
 router.delete('/:id', [
-  validarJWT,
+  //validarJWT,
   check('id', 'no es un id valido de mongoDB').isMongoId(),
   check('id').custom(usuarioExiste),
   check('id').custom(usuarioStateFalse),
-  validarCampos
+ // validarCampos
 ], borrandoUsuarios);
 
 

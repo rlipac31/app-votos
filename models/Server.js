@@ -3,7 +3,8 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 
 
-const { dbConnections } = require('../database/config');
+const { dbConnections } = require('../config/db');
+const { crearUserdmin } = require('../config/config')
 class Server {
     constructor(){
       this.app = express();
@@ -32,6 +33,8 @@ class Server {
   
     //Middlewares
     middlewares(){
+      //datos  inniciaales
+      crearUserdmin()
           //cors
           this.app.use(cors());
           //lectura y parseo del body
@@ -41,7 +44,7 @@ class Server {
           //directorio publico
           this.app.use( express.static('public'));
     }
-    //llamando a las rutas
+    //llamando a las rutass
     routes(){
       this.app.use( this.usuariosPath, require('../routes/usuarios'));
       this.app.use( this.authPath, require('../routes/auth'))
