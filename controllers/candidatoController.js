@@ -25,21 +25,14 @@ const Candidato = require('../models/Candidate');
 //const { usuarioExiste } = require('../helpers/db-validators');
 
 const listarCandidatos = async (req = request, res = response) => {
-
-
-
   const { limite = 0, desde = 0 } = req.query;
   const query = { state: true };
-
-
   const [totalCandidatos, candidatos] = await Promise.all([
     Candidato.countDocuments(query),
     Candidato.find(query)
       .skip(Number(desde))
       .limit(Number(limite))
-
   ])
-
   try {
 
     res.json({
@@ -54,16 +47,13 @@ const listarCandidatos = async (req = request, res = response) => {
 
 const guardarCandidatos = async (req = request, res = response) => {
 
+  console.log('saave canddiato')
   if (!req.file) {
     return res.status(401).send('Error: Tipo de archivo no permitido.');
   }
   console.log(req.file); // Aquí deberías obtener el archivo
-
-
   try {
-
     const { originalname, path } = req.file;
-
     // Upload an image
     const uploadResult = await cloudinary.uploader
       .upload(
@@ -87,23 +77,23 @@ const guardarCandidatos = async (req = request, res = response) => {
       ]
     });
 
-    const {
+  /*   const {
       ' nameCandidato.firstName': firstName,
       'surname.paternal': paternal,
       'imagen.alt': alt,
       ' biography.resumenBio': resumenBio,
       'political_party.name': name
     } = req.body;
+ */
 
-
-
+/* 
     const nameCandidato = {
       firstName: firstName,
       lastName: ''
     }
     const surname = {
       paternal: paternal,
-      maternal: ''
+      maternal: ''s
     }
     const imagen = {
       url: optimizeUrl,
@@ -116,22 +106,35 @@ const guardarCandidatos = async (req = request, res = response) => {
     const political_party = {
       name: name,
       url: ''
-    }
+    } */
+
+    const { ...data } = req.body;
+
+   
+ const  imagen = {
+      url: optimizeUrl,
+       alt: uploadResult.public_id
+    } 
+   
+    console.log('data =>>:' ,data);
     const candidato = new Candidato({
-      nameCandidato,
+    /*   nameCandidato,
       surname,
       imagen,
       political_party,
-      biography,
+      biography, */
+      ...data,
+      imagen
     });
+   
 
     console.log('candidato: ', candidato);
-
+  
     const candidateSave = await candidato.save();
 
     if (candidateSave) {
       res.json({
-        msg: 'Guaradar usuarios corectamente',
+        msg: 'se gurado candidaaato correctamente',
         candidateSave
       });
     } else {
@@ -139,7 +142,7 @@ const guardarCandidatos = async (req = request, res = response) => {
         msg: 'no sse pudo guardar'
 
       })
-    }
+    } 
   } catch (error) {
     console.log(error)
     res.json({ msg: 'Error NO se guardo en la bd' })
@@ -166,26 +169,79 @@ const candidatoId = async (req, res) => {
 
 
 const actualizarCandidato = async (req = request, res = response) => {
-
-
+  console.log('Updatecandidato')
   const { id } = req.params;
-  console.log(id + ' el id =>');
-  const { _id, ...resto } = req.body;
-  console.log(req.body)
+  console.log( ' el id =>', id);
+  const {_id,  ...resto } = req.body;
+  if (!req.file) {
+ 
+      try {
+      
+        const candidato = await Candidato.findByIdAndUpdate(id, resto, {new:true});
+        console.log(candidato);
+       // const candidatoUpdate = await Candidato.findById(id);
+       return res.json({ candidato });
+      } catch (error) {
+        console.log(error)
+      return  res.json({ msg: error })
+      }
+   
+  }
+  //fin
+  try {
+    const { originalname, path } = req.file;
+    console.log('uodaate reqq.file', originalname, path);
+    // Upload an image
+    const uploadResult = await cloudinary.uploader
+      .upload(
+        path, {
+        public_id: originalname,
+      }
+      )
+      .catch((error) => {
+        console.log('Error uploadResult: ', error);
+      });
+
+    // Optimize delivery by resizing and applying auto-format and auto-quality
+    const optimizeUrl = cloudinary.url(uploadResult.url, {
+      transformation: [
+        {
+          quality: 'auto'
+        },
+        {
+          fetch_format: 'auto'
+        }
+      ]
+    });
+
+    console.log(req.file); // Aquí deberías obtener el archivo
+      const political_party  ={
+      imgeUrl: optimizeUrl
+     
+    }
+    const candidatoUpdate= new Candidato({
+      ...resto,
+        political_party
+    })
+  console.log('updateCandidato =>>>>',candidatoUpdate);
+    const candidatoUp = await Candidato.updateOne(
+      { _id: id },
+      candidatoUpdate,
+      {new: true }
+  
+    );//
+  
+    res.json({ candidatoUp }); 
+  } catch (error) {
+     console.log(error)
+      return  res.status(400).json({ msg: error })
+  }
+ 
 
   //validar password por base de datos
 
 
-  try {
-
-    const candidato = await Candidato.findByIdAndUpdate(id, resto);
-    console.log(candidato);
-    const candidatoUpdate = await Candidato.findById(id);
-    res.json({ candidatoUpdate });
-  } catch (error) {
-    console.log(error)
-    res.json({ msg: error })
-  }
+  
 }
 const imgePartidoCandidatoUpdate = async (req = request, res = response) => {
   const { originalname, path } = req.file;
@@ -225,18 +281,27 @@ const imgePartidoCandidatoUpdate = async (req = request, res = response) => {
 
 
 const deleteCandidato = async (req = request, res = response) => {
-
-  try {
+console.log('elimminaar candidaato');
+   try {
     const { id } = req.params;
-    const candidato = await Candidato.findByIdAndUpdate(id, { state: false });
-    const candidatoEliminado = await Candidato.findById(id);
+    const candidato = await Candidato.updateOne(
+      { _id: id },
+      { state: false },
+      {new: true }
+  
+    );
     //console.log(usuaiosAutenticado);
-    return res.json({
-      candidatoEliminado
+    return res.status(200).json({
+      candidato
 
     });
   } catch (error) {
     console.log(error);
+    return res.status(400).json({
+     msg: error
+
+    });
+    
   }
 }
 

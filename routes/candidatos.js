@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 // Función para filtrar archivos
 const fileFilter = (req, file, cb) => {
       // Acepta solo archivos jpg, svg, webp y png
-      const arichivosPermitidos = ['image/jpeg', 'image/svg+xml', 'image/webp', 'image/png'];
+      const arichivosPermitidos = ['image/jpeg', 'image/svg+xml', 'image/webp', 'image/png', 'image/svg'];
       if (arichivosPermitidos.includes(file.mimetype)) {
           cb(null, true);
       } else {
@@ -40,9 +40,10 @@ const router = Router();
 
 
 router.get('/', listarCandidatos);
-router.get('/:id', candidatoId )
+router.get('/:id', candidatoId );//ss
 router.post('/', upload.single('imagen.url'), guardarCandidatos);
-router.patch('/:id', upload.single('political_party.imageUrl'), actualizarCandidato);
+router.patch('/:id', upload.single('political_party.imgeUrl'), actualizarCandidato);
+//router.patch('/:id', upload.single('political_party.imgeUrl'), actualizarCandidato);
 router.delete('/:id', deleteCandidato);
 
 

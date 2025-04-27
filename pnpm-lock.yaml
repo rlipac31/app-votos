@@ -48,6 +48,9 @@ importers:
         specifier: ^0.12.7
         version: 0.12.7
     devDependencies:
+      colors:
+        specifier: ^1.4.0
+        version: 1.4.0
       nodemon:
         specifier: ^3.1.9
         version: 3.1.9
@@ -131,6 +134,10 @@ packages:
   cloudinary@2.5.1:
     resolution: {integrity: sha512-CNg6uU53Hl4FEVynkTGpt5bQEAQWDHi3H+Sm62FzKf5uQHipSN2v7qVqS8GRVqeb0T1WNV+22+75DOJeRXYeSQ==}
     engines: {node: '>=9'}
+
+  colors@1.4.0:
+    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
+    engines: {node: '>=0.1.90'}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -772,6 +779,8 @@ snapshots:
     dependencies:
       lodash: 4.17.21
       q: 1.5.1
+
+  colors@1.4.0: {}
 
   concat-map@0.0.1: {}
 

@@ -34,7 +34,7 @@ class Server {
     //Middlewares
     middlewares(){
       //datos  inniciaales
-      crearUserdmin()
+     // crearUserdmin()
           //cors
           this.app.use(cors());
           //lectura y parseo del body
