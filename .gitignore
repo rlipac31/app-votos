@@ -4,3 +4,5 @@ node_modules/
 config/config.js
 .env
 .env.local
+tem.texxt
+*.text

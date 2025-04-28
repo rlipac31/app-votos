@@ -106,7 +106,46 @@ const saveVotos = async (req = request, res = response) => {
   }
 }
 
+///
+
+
+const  resultCandidatos = async (req, res) => {
+  try {
+    const candidatos = await Candidato.aggregate([
+      {
+        $lookup: {
+          from: 'votos', // Nombre de la colección de votos
+          localField: '_id',
+          foreignField: 'candidatoId',
+          as: 'total_votos'
+        }
+      },
+      {
+        $addFields: {
+          cantidad_votos: { $size: '$total_votos' } // Cuenta los votos
+        }
+      },
+      {
+        $sort: { cantidad_votos: -1 } // Orden descendente (mayor número de votos primero)
+      }
+    ]);
+    
+    console.log('Lista de candidatos ordenados:', candidatos);
+   // const votos = candidatos.map(item => item.totalvotos);
+    return res.status(200).json({
+      candidatos,
+     // votos
+    })
+  } catch (error) {
+    console.error('Error al obtener los candidatos:', error);
+  }
+}
+
+// Llamada a la función
+
+
 module.exports = {
+  resultCandidatos,
   saveVotos,
   listarVotos,
   conteoVotos

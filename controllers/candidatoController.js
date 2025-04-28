@@ -169,15 +169,17 @@ const candidatoId = async (req, res) => {
 
 
 const actualizarCandidato = async (req = request, res = response) => {
-  console.log('Updatecandidato')
+  console.log('Updatecandidato  ok')
   const { id } = req.params;
   console.log( ' el id =>', id);
   const {_id,  ...resto } = req.body;
+//  console.log( ' el rresto =>', resto);
   if (!req.file) {
  
       try {
       
-        const candidato = await Candidato.findByIdAndUpdate(id, resto, {new:true});
+        const candidato = await Candidato.findByIdAndUpdate(id, resto,  { new: true, runValidators: true }
+        );
         console.log(candidato);
        // const candidatoUpdate = await Candidato.findById(id);
        return res.json({ candidato });
@@ -190,7 +192,7 @@ const actualizarCandidato = async (req = request, res = response) => {
   //fin
   try {
     const { originalname, path } = req.file;
-    console.log('uodaate reqq.file', originalname, path);
+   // console.log('uodaate reqq.file', originalname, path);
     // Upload an image
     const uploadResult = await cloudinary.uploader
       .upload(
@@ -219,19 +221,18 @@ const actualizarCandidato = async (req = request, res = response) => {
       imgeUrl: optimizeUrl
      
     }
-    const candidatoUpdate= new Candidato({
-      ...resto,
-        political_party
-    })
-  console.log('updateCandidato =>>>>',candidatoUpdate);
-    const candidatoUp = await Candidato.updateOne(
+    
+    const candidatoUpdate= {...resto, political_party};
+     
+ // console.log('updateCandidato =>>>>',candidatoUpdate);
+     const candidatoUp = await Candidato.updateOne(
       { _id: id },
       candidatoUpdate,
       {new: true }
   
     );//
   
-    res.json({ candidatoUp }); 
+ res.status(200).json({ candidatoUp }); 
   } catch (error) {
      console.log(error)
       return  res.status(400).json({ msg: error })
