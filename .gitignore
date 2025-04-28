@@ -1,6 +1,10 @@
 
 
 node_modules/
+uploads/
+api/
 config/config.js
 .env
 .env.local
+tem.texxt
+*.text

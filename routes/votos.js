@@ -9,13 +9,13 @@ const { validarCampos } = require('../middleware/validar-campos');
 const { validarDNILocal } = require('../helpers/regex');
 const { yaVoto, canditatoExiste } = require('../helpers/db-validators');
 
-const { saveVotos, listarVotos, conteoVotos } = require('../controllers/votoController');
+const { saveVotos, listarVotos, conteoVotos, resultCandidatos } = require('../controllers/votoController');
 
 
 
 const router = Router();
 
-
+router.get('/resultados', resultCandidatos );
 router.get('/total-votos', listarVotos );
 
 router.get('/result-votos', conteoVotos );

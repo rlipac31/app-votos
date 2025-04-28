@@ -34,7 +34,6 @@ class Server {
     //Middlewares
     middlewares(){
       //datos  inniciaales
-      crearUserdmin()
           //cors
           this.app.use(cors());
           //lectura y parseo del body
@@ -46,6 +45,7 @@ class Server {
     }
     //llamando a las rutass
     routes(){
+     // crearUserdmin();
       this.app.use( this.usuariosPath, require('../routes/usuarios'));
       this.app.use( this.authPath, require('../routes/auth'))
       this.app.use( this.candidatosPath, require('../routes/candidatos'));
