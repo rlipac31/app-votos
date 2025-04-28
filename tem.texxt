@@ -1,0 +1,3 @@
+mongodump --uri "mongodb+srv://rlipac-votos:soloexitos.jsx<maylo>nena@cluster0.ssxge.mongodb.net/db-votos" --out C:\Users\Richard\Desktop\Practicas_Programacion\BACKEND\app-votos
+
+mongorestore --db app-votar C:\Users\Richard\Desktop\db-votos
