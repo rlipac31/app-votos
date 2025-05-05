@@ -4,8 +4,8 @@ const dbConnections = async () => {
 
   try {
 
-    await mongoose.connect( process.env.CONECCTION_BD);
-  // await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
+   // await mongoose.connect( process.env.CONECCTION_BD);
+   await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
   
       console.log('se conecto exitosamente');    
   } catch (error) {

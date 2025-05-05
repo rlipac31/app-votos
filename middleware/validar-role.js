@@ -1,4 +1,6 @@
 const esAdminRole = (req, res, next)=>{
+
+ 
     if(!req.usuario ){
       return res.status(500).json({
         msg: ' see  requieree verificar el JsonWeb Token Primero'

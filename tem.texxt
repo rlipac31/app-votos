@@ -1,3 +1,24 @@
 mongodump --uri "mongodb+srv://rlipac-votos:soloexitos.jsx<maylo>nena@cluster0.ssxge.mongodb.net/db-votos" --out C:\Users\Richard\Desktop\Practicas_Programacion\BACKEND\app-votos
 
 mongorestore --db app-votar C:\Users\Richard\Desktop\db-votos
+
+### subirr db a atlas
+mongoimport "mongodb+srv://rlipac-votos:soloexitos.jsx<maylo>nena@cluster0.ssxge.mongodb.net/db-votos" --collection nombre_coleccion --file datos.json --jsonArray
+
+
+//////
+
+
+mongodump --db app-votar --out C:\Users\Richard\Desktop\backup_mongo
+
+/// backup db compas  local  ////mongodb://localhost:27017/
+
+mongodump --uri="mongodb://localhost:27017/app-votar" --out C:\Users\Richard\Desktop\backup_app-votar
+
+// importar  bd local a una bd atlas ya existente
+mongorestore --uri="mongodb+srv://tu_usuario:tu_password@tucluster.mongodb.net" /ruta/del/backup/tu_basedatos
+
+
+mongorestore --uri="mongodb+srv://rlipac-votos:soloexitos.jsx%3Cmaylo%3Enena@cluster0.ssxge.mongodb.net/db-votos"  C:\Users\Richard\Desktop\backup_mongo\app-votar
+
+tu_password-db = 7pFf1yzGzlWvWTHa

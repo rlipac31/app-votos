@@ -10,11 +10,18 @@ CandidatoSchema = Schema({
     paternal: { type: String, required: [true, 'el apellido paaterno es requerido'] },
     maternal: { type: String }
   },
-  imagen: {
+  /* imagen: {
      alt:{type:String},
-     url:{type: String, required: [true, 'La imagen del Politico es requerida'] }
-  },
-
+     url:{
+      cardImage:{type:String},
+      fullImage:{type:String}
+      }
+  }, */
+  imagen: {
+    url:{type:String},
+    alt:{type:String}
+   
+ },
   political_party: {
     name: { type: String, required: [true, 'el nombre del parttido  es requerido'] },
     imgeUrl: { type: String }

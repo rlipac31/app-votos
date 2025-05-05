@@ -51,8 +51,9 @@ router.post('/',[
     esAdminRole,
     validarCampos
 ], upload.single('imagen.url'), guardarCandidatos);
-router.patch('/:id', validarJWT , upload.single('political_party.imgeUrl'), actualizarCandidato);
-//router.patch('/:id', upload.single('political_party.imgeUrl'), actualizarCandidato);
+
+/* router.put('/:id', validarJWT , upload.single('political_party.imgeUrl'), actualizarCandidato); */
+router.patch('/:id', upload.single('imagen.url'), actualizarCandidato);
 router.delete('/:id', validarJWT, deleteCandidato);
 
 

@@ -51,7 +51,9 @@ const guardarCandidatos = async (req = request, res = response) => {
   if (!req.file) {
     return res.status(401).send('Error: Tipo de archivo no permitido.');
   }
-  console.log(req.file); // Aquí deberías obtener el archivo
+  console.log('file ...',req.file); // Aquí deberías obtener el archivo
+  const { originalname, path } = req.file;
+
   try {
     const { originalname, path } = req.file;
     // Upload an image
@@ -67,82 +69,49 @@ const guardarCandidatos = async (req = request, res = response) => {
 
     // Optimize delivery by resizing and applying auto-format and auto-quality
     const optimizeUrl = cloudinary.url(uploadResult.url, {
-      transformation: [
+       transformation: [
         {
           quality: 'auto'
         },
         {
           fetch_format: 'auto'
-        }
-      ]
+        } 
+          
+      ] 
+         
     });
+    //
+const imagen = {
+   url: optimizeUrl,
+   alt: uploadResult.public_id
+}
 
-  /*   const {
-      ' nameCandidato.firstName': firstName,
-      'surname.paternal': paternal,
-      'imagen.alt': alt,
-      ' biography.resumenBio': resumenBio,
-      'political_party.name': name
-    } = req.body;
- */
-
-/* 
-    const nameCandidato = {
-      firstName: firstName,
-      lastName: ''
-    }
-    const surname = {
-      paternal: paternal,
-      maternal: ''s
-    }
-    const imagen = {
-      url: optimizeUrl,
-      alt: uploadResult.public_id
-    }
-    const biography = {
-      resumenBio: resumenBio,
-      link_wiki: ''
-    }
-    const political_party = {
-      name: name,
-      url: ''
-    } */
+  
 
     const { ...data } = req.body;
 
-   
- const  imagen = {
-      url: optimizeUrl,
-       alt: uploadResult.public_id
-    } 
-   
-    console.log('data =>>:' ,data);
+    console.log('data ....', data, 'imageenesn  ...', imagen);
+
     const candidato = new Candidato({
-    /*   nameCandidato,
-      surname,
-      imagen,
-      political_party,
-      biography, */
       ...data,
       imagen
-    });
-   
+    })
 
     console.log('candidato: ', candidato);
   
-    const candidateSave = await candidato.save();
+         const candidateSave = await candidato.save();
 
-    if (candidateSave) {
-      res.json({
-        msg: 'se gurado candidaaato correctamente',
-        candidateSave
-      });
-    } else {
-      res.status(401).json({
-        msg: 'no sse pudo guardar'
+            if (candidateSave) {
+              res.json({
+                msg: 'se gurado candidaaato correctamente',
+                candidateSave
+              });
+            } else {
+              res.status(401).json({
+                msg: 'no sse pudo guardar'
 
-      })
-    } 
+              })
+            }  
   } catch (error) {
     console.log(error)
     res.json({ msg: 'Error NO se guardo en la bd' })
@@ -215,24 +184,28 @@ const actualizarCandidato = async (req = request, res = response) => {
         }
       ]
     });
-
-    console.log(req.file); // Aquí deberías obtener el archivo
+    console.log(req.file);
+  /*   console.log(req.file); // Aquí deberías obtener el archivo
       const political_party  ={
       imgeUrl: optimizeUrl
      
-    }
-    
-    const candidatoUpdate= {...resto, political_party};
-     
- // console.log('updateCandidato =>>>>',candidatoUpdate);
-     const candidatoUp = await Candidato.updateOne(
+    } */
+      const imagen ={
+        url: optimizeUrl,
+        alt: uploadResult.public_id
+       
+      }
+    console.log('upload', uploadResult, 'optimise ', optimizeUrl);
+    const candidatoUpdate= {...resto, imagen};
+      console.log('updateCandidato =>>>>',candidatoUpdate);
+      const candidatoUp = await Candidato.updateOne(
       { _id: id },
       candidatoUpdate,
       {new: true }
   
-    );//
+    );
   
- res.status(200).json({ candidatoUp }); 
+   return res.status(200).json({ candidatoUp }); 
   } catch (error) {
      console.log(error)
       return  res.status(400).json({ msg: error })

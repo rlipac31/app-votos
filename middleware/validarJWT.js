@@ -6,6 +6,7 @@ const Usuario = require('../models/Usuario');
 const validarJWT = async (req = request, res = response, next) => {
 
   const token = req.header('token');
+  
 
   try {
     if (!token) {
@@ -16,8 +17,9 @@ const validarJWT = async (req = request, res = response, next) => {
 
     const { uid } = jwt.verify(token, process.env.PRIVATE_KEY_WORD);
   
-    /* req.uid = uid; */ //pasamoms el  uid del ussuario logueado al la request
+  //pasamoms el  uid del ussuario logueado al la request
     const usuario = await Usuario.findById(uid);
+    req.usuario = usuario;
     if (!usuario) {
       return res.json({
         msg: ' Token no valido - usuario no exist en BD'
@@ -36,8 +38,9 @@ const validarJWT = async (req = request, res = response, next) => {
     });
   }
 
-  next();
 
+  next();
+//
 }
 
 module.exports = {

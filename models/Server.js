@@ -45,7 +45,7 @@ class Server {
     }
     //llamando a las rutass
     routes(){
-     // crearUserdmin();
+      crearUserdmin();
       this.app.use( this.usuariosPath, require('../routes/usuarios'));
       this.app.use( this.authPath, require('../routes/auth'))
       this.app.use( this.candidatosPath, require('../routes/candidatos'));
