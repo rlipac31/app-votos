@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 
 const { request, response } = require('express');
 
-const validarCampos = ( req = request , res = response, next )=>{
+const validarCampos = ( req, res, next )=>{
 
     const errors = validationResult(req);// genera un aarreglo de erros del reques y lo muestra cuando ocurra un error
       if(!errors.isEmpty()){
@@ -10,9 +10,6 @@ const validarCampos = ( req = request , res = response, next )=>{
       }
       next();
 }
-
-
-
 
 module.exports = {
   validarCampos
