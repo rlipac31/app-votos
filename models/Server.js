@@ -15,7 +15,8 @@ const allowedOrigins = [
    `https://app-votos-cnnb.onrender.com/api/candidatos/`,//lista candidatos
    `https://app-votos-cnnb.onrender.com/api/votos/result-votos`,//lista votos
    `http://localhost:5000/api/votos/result-votos`,//votos local
-    'http://localhost:4000', // Si tu frontend corre en localhost para desarrollo (ej. Angular, React, Vue)
+    'http://localhost:4000', // Si tu frontend corre en localhost para desarrollo (ej. 
+   'http://localhost:5000',// 
     'http://localhost:3000', // O si tu frontend corre en otro puerto de localhost
   
 
@@ -76,8 +77,8 @@ class Server {
       // Esto limitará cada IP a 100 peticiones en un período de 15 minutos
        const apiLimiter = rateLimit({
           windowMs: 15 * 60 * 1000, // 15 minutos
-          max: 50, // Limita cada IP a 100 peticiones por ventana
-          message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo después de 15 minutos'
+          max: 100, // Limita cada IP a 100 peticiones por ventana
+          message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo después de 20 minutos'
       });
 
       // Aplica el rate limiter a todas las rutas que empiecen con /api/
