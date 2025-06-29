@@ -74,8 +74,8 @@ class Server {
           //lectura y parseo del body
           // Configuración del Rate Limiter
       // Esto limitará cada IP a 100 peticiones en un período de 15 minutos
-      const apiLimiter = rateLimit({
-          windowMs: 20 * 60 * 1000, // 20 minutos
+       const apiLimiter = rateLimit({
+          windowMs: 15 * 60 * 1000, // 15 minutos
           max: 50, // Limita cada IP a 100 peticiones por ventana
           message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo después de 15 minutos'
       });
