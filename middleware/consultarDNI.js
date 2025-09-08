@@ -3,7 +3,7 @@
 const fetch = require('node-fetch');
 
 async function consultarDNI(dni) {
-  const token = 'apis-token-15091.YMfday3IixETfjPdPfWDYSZcozW4uQ5H';
+  const token = process.env.TOKEN_CONSULTA_DNI;
   const url = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
 
   const response = await fetch(url, {
@@ -14,6 +14,7 @@ async function consultarDNI(dni) {
   });
 
   if (!response.ok) {
+    console.log(`error en servicio consulta dni`)
     throw new Error('Error en la consulta DNI');
   }
 

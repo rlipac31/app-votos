@@ -21,9 +21,14 @@ let regexDNI = /^[\d]{8}$/;
 
 // validar DNI Peru solo 8 digitos solo numeros
 function validarDNILocal(identity){
-  console.log('vvaallindanddo  dni... ')
-   regexDNI.test(identity);
-  return console.log('regexDNI ', regexDNI.test(password))
+  console.log('vvaallindanddo  dni... ', identity)
+  const dniValido = regexDNI.test(identity);
+  if(!dniValido){
+    return console.log(dniValido)
+  }
+     return dniValido
+  
+ // return console.log('regexDNI ', regexDNI.test(password))
 }
 
 

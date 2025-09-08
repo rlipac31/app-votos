@@ -112,7 +112,7 @@ const saveVotos = async (req = request, res = response) => {
     }
   } catch (error) {
   return  console.log(error)
-    res.json({ msg: 'Error NO se guardo en la bd' })
+    //res.json({ msg: 'Error NO se guardo en la bd' })
   }
 }
 
