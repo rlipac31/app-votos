@@ -4,7 +4,7 @@ const { response, request } = require('express');
 // importando Modelo
 const Voto = require('../models/Voto');
 const Candidato = require('../models/Candidate');
-const { consultarDNI }= require('../middleware/consultarDNI')
+//const { consultarDNI }= require('../middleware/consultarDNI')
 
 const listarVotos = async (req = request, res = response) => {
 
@@ -86,8 +86,8 @@ const saveVotos = async (req = request, res = response) => {
   const { candidatoId } = req.params;
   const { identity, localidad } = req.body;
   try {
-  // Ejemplo de uso:
-    const dniValido = await consultarDNI(identity)//valida desde uuna api externa si el dni existe o nos
+  // Ejemplo de uso:// servicio caido
+  /*   const dniValido = await consultarDNI(identity)//valida desde uuna api externa si el dni existe o nos
         .then(data => console.log(data))
         .catch(err => res.status(403).json({
             msg: err
@@ -96,7 +96,7 @@ const saveVotos = async (req = request, res = response) => {
           return res.status(403).json({
             msg:"Inggresa un DNI Real"
           })
-        }
+        } */
       
   const voto = new Voto({ identity, localidad, candidatoId });
     const votacion = await voto.save();

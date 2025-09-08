@@ -24,9 +24,10 @@ router.post('/:candidatoId',[
       check('candidatoId','el id del candidato esta en blanco').not().isEmpty(),
       check('candidatoId',' no es un un candidato valido o no  existe el la  BD').isMongoId(),
       check('candidatoId').custom(canditatoExiste),
-      check('identity').custom(validarDNILocal),
       check('identity').custom(yaVoto),
       validarCampos
+    //  check('identity').custom(validarDNILocal),
+     
     ],
   saveVotos );
 
