@@ -14,7 +14,7 @@ async function consultarDNI(dni) {
   });
 
   if (!response.ok) {
-    console.log(`error en servicio consulta dni`)
+    console.log(`error en servicio consulta dni`)// servicio caido al 8 setiembre 2025
     throw new Error('Error en la consulta DNI');
   }
 

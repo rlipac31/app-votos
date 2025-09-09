@@ -26,7 +26,6 @@ router.post('/:candidatoId',[
       check('candidatoId').custom(canditatoExiste),
       check('identity').custom(yaVoto),
       validarCampos
-    //  check('identity').custom(validarDNILocal),
      
     ],
   saveVotos );
