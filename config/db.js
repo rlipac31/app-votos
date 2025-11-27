@@ -36,7 +36,7 @@ const mongoose = require('mongoose');
         if (localConnectionString) {
           try {
             await mongoose.connect(localConnectionString, { serverSelectionTimeoutMS: 3000 }); // Timeout más corto
-            console.log('Conexión exitosa a la base de datos local');
+            console.log('Conexion Local exitosa (cnexion con BD local)');
             connected = true;
           } catch (localError) {
             console.error('Error al conectar a la base de datos local:', localError);
