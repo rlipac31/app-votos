@@ -30,42 +30,60 @@ const conteoVotos = async (req = request, res = response) => {
   //agretate para agrupar,$group para buscar grupo { count: cuenta documentos, $suma y multiplica por 1 el resultado}
 
   const resultadoVotos = await Voto.aggregate([
-    {
-      $group: {//agrupa
-        _id: "$candidatoId",
-        totalVotes: { $sum: 1 }// suma los votos que conicidan con el candidateId
-      }
-    },
-    {
-      $lookup: {//buscar y hace un join de las tablas con id local y id foranea
-        from: "candidatos",//tabla canddidatos
-        localField: "_id",//campo local
-        foreignField: "_id",//campo foraneo
-        as: "candidateDetails" //como
-      }
-    },
-    {
-      $project: {
-        totalVotes: 1,
-        candidateDetails: {//crea un objeto con la informacion solicitada
-          $arrayElemAt: [//crea un elemento del array soliccitado
-            {
-              $map: {// recorre el arrray
-                input: "$candidateDetails",
-                as: "candidate",
-                in: {// muesttra los datoss solicitados
-                  firstName: "$$candidate.nameCandidato.firstName",
-                  paternalSurname: "$$candidate.surname.paternal",
-                  candidateImageUrl: "$$candidate.imagen.url"
-                }
+  {
+    $lookup: {
+      from: "candidatos",
+      localField: "candidatoId",
+      foreignField: "_id",
+      as: "candidateInfo"
+    }
+  },
+  {
+    $match: {
+      "candidateInfo.state": true
+    }
+  },
+  {
+    $group: {
+      _id: "$candidatoId",
+      totalVotes: { $sum: 1 }
+    }
+  },
+  {
+    $lookup: {
+      from: "candidatos",
+      localField: "_id",
+      foreignField: "_id",
+      as: "candidateDetails"
+    }
+  },
+  {
+    $match: {
+      "candidateDetails.state": true
+    }
+  },
+  {
+    $project: {
+      totalVotes: 1,
+      candidateDetails: {
+        $arrayElemAt: [
+          {
+            $map: {
+              input: "$candidateDetails",
+              as: "candidate",
+              in: {
+                firstName: "$$candidate.nameCandidato.firstName",
+                paternalSurname: "$$candidate.surname.paternal",
+                candidateImageUrl: "$$candidate.imagen.url"
               }
-            },
-            0
-          ]
-        }
+            }
+          },
+          0
+        ]
       }
     }
-  ])
+  }
+]);
 
   let  votosCandidato = resultadoVotos.map(row=>row.totalVotes)
   let nameCandidatos = resultadoVotos.map(row => row.candidateDetails.firstName)
