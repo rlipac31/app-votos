@@ -1,11 +1,19 @@
-const express = require('express');
-const cors = require("cors");
-const bodyParser = require('body-parser');
-const rateLimit = require('express-rate-limit'); // ¡Importa express-rate-limit!
 
 
-const { dbConnections } = require('../config/db');
-const { crearUserdmin } = require('../config/config')
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import rateLimit from 'express-rate-limit';
+
+
+import { dbConnections } from '../config/db.js';
+import { crearUserdmin } from '../config/config.js';
+
+import routerVotos from '../routes/votos.js';
+import routerCandidatos from '../routes/candidatos.js';
+import routerUsuarios from '../routes/usuarios.js';
+import routerAuth from '../routes/auth.js';
+
       //inicio cors
       // Define la URL de tu frontend.
 // Es crucial que esta URL sea EXACTA (incluyendo http/https, www, puerto si lo tiene).
@@ -17,7 +25,7 @@ const allowedOrigins = [
    `http://localhost:5000/api/votos/result-votos`,//votos local
     'http://localhost:4000', // Si tu frontend corre en localhost para desarrollo (ej. 
    'http://localhost:5000',// 
-    'http://localhost:3000', // O si tu frontend corre en otro puerto de localhost
+   'http://localhost:3000', // O si tu frontend corre en otro puerto de localhost
   
 
 ];
@@ -66,7 +74,7 @@ class Server {
     }
   
     //Middlewares
-    middlewares(){
+   /*  middlewares(){
       // Aplica el middleware CORS con tus opciones personalizadas
       crearUserdmin();
       //datos  inniciaales
@@ -81,23 +89,51 @@ class Server {
           message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo después de 20 minutos'
       });
 
+
+      
+
       // Aplica el rate limiter a todas las rutas que empiecen con /api/
       // Esto significa que tus rutas como /api/auth, /api/usuarios, etc., estarán protegidas.
 
-         this.app.use('/api/', apiLimiter);
+          this.app.use('/api/', apiLimiter);
           this.app.use( express.json());
           this.app.use(bodyParser.json());    
           this.app.use(bodyParser.urlencoded({ extended: true }));
           //directorio publico
           this.app.use( express.static('public'));
-    }
+    } */
+
+
+          middlewares() {
+            // 1. Crear admin (Ejecutar lógica antes de configurar tráfico si es necesario)
+            crearUserdmin();
+
+            // 2. CORS (Siempre debe ir de los primeros)
+            this.app.use(cors(corsOptions));
+
+            // 3. Lectura y parseo del Body (SOLO UNO)
+            // Importante: Debe ir ANTES de las rutas y del limitador si este analiza contenido
+            this.app.use(express.json({ limit: '50mb' })); 
+            this.app.use(express.urlencoded({ extended: true }));
+
+            // 4. Rate Limiter
+            const apiLimiter = rateLimit({
+                windowMs: 15 * 60 * 1000,
+                max: 50,
+                message: 'Demasiadas solicitudes, intenta en 20 minutos'
+            });
+            this.app.use('/api/', apiLimiter);
+
+            // 5. Directorio público
+            this.app.use(express.static('public'));
+        }
     //llamando a las rutass
     routes(){
       crearUserdmin();
-      this.app.use( this.usuariosPath, require('../routes/usuarios'));
-      this.app.use( this.authPath, require('../routes/auth'))
-      this.app.use( this.candidatosPath, require('../routes/candidatos'));
-      this.app.use( this.votosPath, require('../routes/votos'));
+      this.app.use( this.usuariosPath, routerUsuarios); 
+      this.app.use( this.authPath, routerAuth)
+      this.app.use( this.candidatosPath, routerCandidatos);
+      this.app.use( this.votosPath, routerVotos);
     }
     //levantando el servidor
 
@@ -108,4 +144,5 @@ class Server {
     }
 }
 
-module.exports = Server;
+export default Server;
+

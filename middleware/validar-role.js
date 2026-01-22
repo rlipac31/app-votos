@@ -1,4 +1,4 @@
-const esAdminRole = (req, res, next)=>{
+export const esAdminRole = (req, res, next)=>{
 
  
     if(!req.usuario ){
@@ -17,7 +17,7 @@ const esAdminRole = (req, res, next)=>{
 next();
 }
 
-const tieneRol = (req, res, next)=>{
+export const tieneRol = (req, res, next)=>{
   if(!req.usuario ){
     return res.status(500).json({
       msg: ' primmero  tiene  que loguearse  para generar su token'
@@ -36,7 +36,3 @@ const { role, email } = req.usuario;
 
 }
 
-module.exports ={
-    esAdminRole,
-    tieneRol
-  }

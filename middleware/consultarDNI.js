@@ -1,8 +1,8 @@
 // archivo: consultarDNI.js
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-async function consultarDNI(dni) {
+export  async function consultarDNI(dni) {
   const token = process.env.TOKEN_CONSULTA_DNI;
   const url = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`;
 
@@ -26,10 +26,7 @@ async function consultarDNI(dni) {
   .then(data => console.log(data))
   .catch(err => console.error(err)); */
   
-  module.exports={
-  consultarDNI
-} 
-//
+
 
 
 

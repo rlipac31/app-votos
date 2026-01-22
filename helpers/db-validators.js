@@ -1,10 +1,13 @@
-const Usuario = require('../models/Usuario');
-const Voto = require('../models/Voto');
-const Candidato = require('../models/Candidate');
+
+
+import Usuario from '../models/Usuario.js';
+import Voto from '../models/Voto.js';
+import Candidato from '../models/Candidate.js';
 
 
 
-const emailYaExiste = async(email)=>{
+
+export const emailYaExiste = async(email)=>{
   //validar si email ya existe en laa base de datos
 
   const emailExiste = await Usuario.findOne({ email });
@@ -14,7 +17,7 @@ const emailYaExiste = async(email)=>{
   }
 }
 
-const usuarioExiste = async(id) => {
+export const usuarioExiste = async(id) => {
   //verificar si usuario existe con el id
   const usuarioIdExiste = await Usuario.findById( id );
   if(!usuarioIdExiste){
@@ -22,15 +25,15 @@ const usuarioExiste = async(id) => {
   }
 }
 
-const usuarioStateFalse = async(id)=> {
+export const usuarioStateFalse = async(id)=> {
   const usuarioActivo = await Usuario.findById( id );
     if(usuarioActivo.state === false ){
-      throw new Error(`el usuario :  ${ userIdExiste.email } no esta habilitado`);
+      throw new Error(`el usuario :  ${ usuarioActivo.email } no esta habilitado`);
     }
 }
 
 
-const yaVoto = async(identity)=>{
+export const yaVoto = async(identity)=>{
   
   //validar si email ya existe en laa base de datos
 
@@ -41,7 +44,7 @@ const yaVoto = async(identity)=>{
   }
 }
 
-const canditatoExiste = async(candidatoId) => {
+export const canditatoExiste = async(candidatoId) => {
   //verificar si canditato existe con el id
   const canditatoIdExiste = await Candidato.findById( candidatoId );
   if(!canditatoIdExiste){
@@ -51,11 +54,3 @@ const canditatoExiste = async(candidatoId) => {
 }
 
 
-module.exports = {
-  emailYaExiste,
-  usuarioExiste,
-  usuarioStateFalse,
-  yaVoto,
-  canditatoExiste
- 
-}

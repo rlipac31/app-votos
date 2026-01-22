@@ -1,7 +1,25 @@
-const { Router } = require('express');
-const { check } = require('express-validator');
-const cloudinary = require('cloudinary').v2;
-const  multer   =  require ( 'multer' );
+
+
+import { Router } from 'express';
+
+import { check } from 'express-validator';
+import { v2 as  cloudinary} from 'cloudinary';
+import multer from 'multer';
+
+
+import {
+    listarCandidatos,
+    guardarCandidatos,
+    actualizarCandidato,
+    deleteCandidato,
+    candidatoId,
+    updateCandidatoImgeUrl
+} from '../controllers/candidatoController.js';
+
+import { validarJWT } from '../middleware/validarJWT.js';
+import { validarCampos } from '../middleware/validar-campos.js';
+import { esAdminRole } from '../middleware/validar-role.js';
+
 
 const storage = multer.diskStorage({
       destination: function (req, file, cb) {
@@ -28,17 +46,6 @@ const fileFilter = (req, file, cb) => {
       fileFilter: fileFilter
   });
 
-const {
-
-      listarCandidatos,
-      guardarCandidatos,
-      actualizarCandidato,
-      deleteCandidato,
-      candidatoId
-} = require('../controllers/candidatoController');
-const {  validarJWT } = require('../middleware/validarJWT');
-const { validarCampos } = require('../middleware/validar-campos');
-const { esAdminRole } = require('../middleware/validar-role');
 
 
 const router = Router();
@@ -49,14 +56,16 @@ router.get('/:id', candidatoId );//ss
 router.post('/',[
     validarJWT,
     esAdminRole,
-    validarCampos
+   // validarCampos
 ], upload.single('imagen.url'), guardarCandidatos);
 
 /* router.put('/:id', validarJWT , upload.single('political_party.imgeUrl'), actualizarCandidato); */
+
+router.put('/update/:id', validarJWT, esAdminRole, updateCandidatoImgeUrl);
 router.patch('/:id', upload.single('imagen.url'), actualizarCandidato);
 router.delete('/:id', validarJWT, deleteCandidato);
 
 
 
 
-module.exports= router;
+export default router;

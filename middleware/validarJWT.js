@@ -1,9 +1,10 @@
-const { request, response } = require("express");
-const jwt = require('jsonwebtoken');
-const Usuario = require('../models/Usuario');
 
 
-const validarJWT = async (req = request, res = response, next) => {
+import { request, response } from 'express';
+import jwt from 'jsonwebtoken';
+import Usuario from '../models/Usuario.js';
+
+export const validarJWT = async (req = request, res = response, next) => {
 
   const token = req.header('token');
   
@@ -43,6 +44,3 @@ const validarJWT = async (req = request, res = response, next) => {
 //
 }
 
-module.exports = {
-  validarJWT
-}

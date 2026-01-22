@@ -1,8 +1,8 @@
-const { validationResult } = require('express-validator');
 
-const { request, response } = require('express');
-
-const validarCampos = ( req, res, next )=>{
+import { request, response } from 'express';
+import { validationResult } from 'express-validator';
+ 
+export const validarCampos = ( req, res, next )=>{
 
     const errors = validationResult(req);// genera un aarreglo de erros del reques y lo muestra cuando ocurra un error
       if(!errors.isEmpty()){
@@ -11,7 +11,3 @@ const validarCampos = ( req, res, next )=>{
       next();
 }
 
-module.exports = {
-  validarCampos
-
-}

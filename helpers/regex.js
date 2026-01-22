@@ -2,7 +2,7 @@
 // validar nombre usuario valido
 let regex = /^[A-Za-z\d-]+$/;//expresion regular no permite caracteres especiales, pero si guiones nb numero
 
- function validarNombreUsuario(nombre) {
+export  function validarNombreUsuario(nombre) {
   return regex.test(nombre);
 } 
 
@@ -10,7 +10,7 @@ let regex = /^[A-Za-z\d-]+$/;//expresion regular no permite caracteres especiale
 
 let regexPasword = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
 
-function validarContrasena(password) {
+export function validarContrasena(password) {
    console.log('vvaallindanddo  passwoord... ')
   return regexPasword.test(password);
   // console.log('regexpasword ', regexPasword.test(password))
@@ -20,7 +20,7 @@ function validarContrasena(password) {
 let regexDNI = /^[\d]{8}$/;
 
 // validar DNI Peru solo 8 digitos solo numeros
-function validarDNILocal(identity){
+export function validarDNILocal(identity){
   console.log('vvaallindanddo  dni... ', identity)
   const dniValido = regexDNI.test(identity);
   if(!dniValido){
@@ -29,11 +29,4 @@ function validarDNILocal(identity){
      return dniValido
   
  // return console.log('regexDNI ', regexDNI.test(password))
-}
-
-
-module.exports = {
-  validarNombreUsuario,
-  validarContrasena,
-  validarDNILocal
 }

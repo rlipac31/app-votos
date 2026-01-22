@@ -1,6 +1,7 @@
-const { Schema, model } = require('mongoose');
 
-VotoSchema = Schema({
+import { Schema, model } from 'mongoose';
+
+const VotoSchema = Schema({
   identity: {
     type: String,
     unique: true,
@@ -18,4 +19,5 @@ VotoSchema = Schema({
 
 }, { timestamps: true });
 
-module.exports = model('Voto', VotoSchema);
+
+export default model('Voto', VotoSchema);

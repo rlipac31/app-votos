@@ -1,6 +1,7 @@
 {
   "name": "app-votos",
   "version": "1.0.0",
+  "type": "module",
   "description": "app votos onleline, creada con fines ademicos no comerciales",
   "main": "app.js",
   "scripts": {

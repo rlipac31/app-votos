@@ -1,7 +1,8 @@
 
-const jwt = require('jsonwebtoken');
 
-const generarJWT = (uid = '') => {// el uid es el id que le pasamos co el uuario
+import jwt from 'jsonwebtoken';
+
+export const generarJWT = (uid = '') => {// el uid es el id que le pasamos co el uuario
 
   return new Promise((resolve, reject) => {
 
@@ -25,6 +26,3 @@ const generarJWT = (uid = '') => {// el uid es el id que le pasamos co el uuario
 
 }
 
-module.exports = {
-  generarJWT
-}

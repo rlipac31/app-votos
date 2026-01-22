@@ -1,13 +1,16 @@
-const { response, request } = require('express');
-const bcryptjs = require('bcryptjs');
+import {request, response} from 'express';
+import bcryptjs from 'bcryptjs';
 
 // importando Modelo
-const Usuario = require('../models/Usuario');
-const { usuarioExiste } = require('../helpers/db-validators');
+
+
+import Usuario from '../models/Usuario.js';
+
+import { usuarioExiste  } from '../helpers/db-validators.js';
 
 
 
-const listarUsuarios = async (req = request, res = response) => {
+export const listarUsuarios = async (req = request, res = response) => {
 
   const { limite = 5, desde = 0 } = req.query;
   const query = { state: true };
@@ -30,7 +33,7 @@ const listarUsuarios = async (req = request, res = response) => {
   }
 }
 
-const guardarUsuarios = async (req = request, res = response) => {
+export const guardarUsuarios = async (req = request, res = response) => {
 
   const { name, email, password, role, age, cyti, avatarImg } = req.body;
   const usuario = new Usuario({ name, email, password, role, age, cyti, avatarImg });
@@ -59,7 +62,7 @@ const guardarUsuarios = async (req = request, res = response) => {
   }
 }
 
-const actualizarUsuarios = async(req = request, res = response) => {
+export const actualizarUsuarios = async(req = request, res = response) => {
 
   const { id }= req.params;
 
@@ -84,26 +87,20 @@ const actualizarUsuarios = async(req = request, res = response) => {
   }
 }
 
-const borrandoUsuarios = async(req = request, res = response) => {
+export const borrandoUsuarios = async(req = request, res = response) => {
   
-  try {
-    const { id  } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
-    const  usuarioEliminado = await Usuario.findById(id);
-    //console.log(usuaiosAutenticado);
-    return res.json({
-       usuarioEliminado
-     
-    });
-}catch (error) {
-    console.log(error);         
-}
+    try {
+      const { id  } = req.params;
+      const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
+      const  usuarioEliminado = await Usuario.findById(id);
+      //console.log(usuaiosAutenticado);
+      return res.json({
+        usuarioEliminado
+      
+      });
+  }catch (error) {
+      console.log(error);         
+  }
 }
 
 
-module.exports = {
-  listarUsuarios,
-  guardarUsuarios,
-  actualizarUsuarios,
-  borrandoUsuarios
-}

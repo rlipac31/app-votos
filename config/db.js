@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
-/* 
- const dbConnections = async () => {
+
+
+import mongoose from 'mongoose';
+
+ export const dbConnections = async () => {
 
   try {
 
-    await mongoose.connect( process.env.CONECCTION_BD );
-   //await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
+   // await mongoose.connect( process.env.CONECCTION_BD );
+   await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
        
       console.log('se conecto exitosamente LOCAL');    
   } catch (error) {
@@ -16,9 +18,9 @@ const mongoose = require('mongoose');
 
   }
 
-} */
+} 
 
-
+/* 
  const dbConnections = async () => {
   try {
     let connected = false;
@@ -62,9 +64,6 @@ const mongoose = require('mongoose');
     throw new Error('Error general durante la conexión a la base de datos');
   }
 }
+ */
 
 
-
-module.exports = {
-  dbConnections
-}

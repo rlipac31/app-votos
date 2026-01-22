@@ -1,12 +1,14 @@
-const { response, request } = require('express');
-
+import { request, response } from 'express';
 
 // importando Modelo
-const Voto = require('../models/Voto');
-const Candidato = require('../models/Candidate');
+
+
+import Voto from '../models/Voto.js';
+import Candidato from '../models/Candidate.js';
+
 //const { consultarDNI }= require('../middleware/consultarDNI')
 
-const listarVotos = async (req = request, res = response) => {
+export const listarVotos = async (req = request, res = response) => {
 
   try {
 
@@ -25,7 +27,7 @@ const listarVotos = async (req = request, res = response) => {
 
 }
 
-const conteoVotos = async (req = request, res = response) => {
+export const conteoVotos = async (req = request, res = response) => {
 
   //agretate para agrupar,$group para buscar grupo { count: cuenta documentos, $suma y multiplica por 1 el resultado}
 
@@ -99,7 +101,7 @@ const conteoVotos = async (req = request, res = response) => {
 
 }
 
-const saveVotos = async (req = request, res = response) => {
+export const saveVotos = async (req = request, res = response) => {
 
   const { candidatoId } = req.params;
   const { identity, localidad } = req.body;
@@ -137,7 +139,7 @@ const saveVotos = async (req = request, res = response) => {
 ///
 
 
-const  resultCandidatos = async (req, res) => {
+export const  resultCandidatos = async (req, res) => {
   try {
     const candidatos = await Candidato.aggregate([
       {
@@ -171,11 +173,3 @@ const  resultCandidatos = async (req, res) => {
 
 // Llamada a la función
 
-
-module.exports = {
-  resultCandidatos,
-  saveVotos,
-  listarVotos,
-  conteoVotos
-
-} 

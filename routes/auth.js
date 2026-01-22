@@ -1,11 +1,11 @@
-const { Router } = require('express');
-const { check } = require('express-validator');
+
+import { Router } from 'express';
+import { check } from 'express-validator';
 
 // middlewwares
-const { validarCampos } = require('../middleware/validar-campos')
+import {login} from '../controllers/authController.js';
 
-
-const { login } = require('../controllers/authController');
+import { validarCampos } from '../middleware/validar-campos.js';
 
 
 const router = Router();
@@ -20,4 +20,4 @@ router.post('/login',[
 
 ], login);
 
-module.exports = router;
+export default router;

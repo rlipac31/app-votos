@@ -1,15 +1,16 @@
-const { Schema, model } = require('mongoose');
 
 
-CandidatoSchema = Schema({
-  nameCandidato: {
-    firstName: { type: String, required: [true, 'el primer nombre es requerido'] },
-    lastName: { type: String }
-  },
-  surname: {
-    paternal: { type: String, required: [true, 'el apellido paaterno es requerido'] },
-    maternal: { type: String }
-  },
+import { Schema, model } from 'mongoose';
+
+
+const CandidatoSchema = Schema({
+  
+    nameCandidato: { type: String, required: [true, 'el primer nombre es requerido'] },
+
+
+    surname: { type: String, required: [true, 'el apellidos son requeridos'] },
+
+
   /* imagen: {
      alt:{type:String},
      url:{
@@ -48,4 +49,4 @@ CandidatoSchema.methods.toJSON = function () {
 }
 
 
-module.exports = model('Candidato', CandidatoSchema);
+export default model('Candidato', CandidatoSchema);

@@ -1,16 +1,14 @@
-const { Router } = require('express');
-const { check } = require('express-validator');
+
+import { Router } from 'express';
+import { check } from 'express-validator';
 
 //middlewares
 
-const { validarCampos } = require('../middleware/validar-campos');
+import { validarCampos } from '../middleware/validar-campos.js';
 
-//helpers 
-const { validarDNILocal } = require('../helpers/regex');
-const { yaVoto, canditatoExiste } = require('../helpers/db-validators');
-
-const { saveVotos, listarVotos, conteoVotos, resultCandidatos } = require('../controllers/votoController');
-
+//import { validarDNILocal } from '../helpers/regex';
+import { yaVoto, canditatoExiste } from '../helpers/db-validators.js';
+import { saveVotos, listarVotos, conteoVotos, resultCandidatos } from '../controllers/votoController.js';
 
 
 const router = Router();
@@ -31,6 +29,4 @@ router.post('/:candidatoId',[
   saveVotos );
 
 
-
-
-module.exports=router;
+export default router;
