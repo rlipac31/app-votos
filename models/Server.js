@@ -18,26 +18,28 @@ import routerAuth from '../routes/auth.js';
       // Define la URL de tu frontend.
 // Es crucial que esta URL sea EXACTA (incluyendo http/https, www, puerto si lo tiene).
 // Puedes obtenerla de una variable de entorno para mayor flexibilidad en diferentes entornos (desarrollo, producción).
-const allowedOrigins = [
-  `https://votalibre.netlify.app/`,
-  `https://app-votar-2025-orpin.vercel.app/`, // index
-   `https://app-votos-cnnb.onrender.com/api/candidatos/`,//lista candidatos
-   `https://app-votos-cnnb.onrender.com/api/votos/result-votos`,//lista votos
-   `http://localhost:5000/api/votos/result-votos`,//votos local
-    'http://localhost:4000', // Si tu frontend corre en localhost para desarrollo (ej. 
-   'http://localhost:5000',// 
-   'http://localhost:3000', // O si tu frontend corre en otro puerto de localhost
-  
 
+
+const allowedOrigins = [
+  'https://votalibre.netlify.app',
+  'https://app-votar-2025-orpin.vercel.app',
+  'http://localhost:4000',
+  'http://localhost:5000',
+  'http://localhost:3000'
 ];
+
 
 // Configuración de CORS
 const corsOptions = {
     origin: function (origin, callback) {
         // Permite solicitudes sin origen (como las de Postman/Insomnia o solicitudes de archivos locales)
         // O si el origen de la solicitud está en nuestra lista de orígenes permitidos
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true); // Permite la solicitud
+       // if (!origin || allowedOrigins.includes(origin)) {
+         //   callback(null, true); // Permite la solicitud
+
+      if (!origin || allowedOrigins.some(o => origin.startsWith(o))) {
+                  callback(null, true);
+
         } else {
             callback(new Error('No permitido por CORS')); // Bloquea la solicitud
         }
@@ -46,6 +48,8 @@ const corsOptions = {
     credentials: true, // Si tu frontend necesita enviar cookies o encabezados de autorización con credenciales
     optionsSuccessStatus: 204 // Para pre-vuelos OPTIONS
 };
+
+
       //fin cors
 
 class Server {
@@ -73,9 +77,6 @@ class Server {
     async conexionBD(){
       await  dbConnections();
     }
-  
-   
-
 
           middlewares() {
             // 1. Crear admin (Ejecutar lógica antes de configurar tráfico si es necesario)
@@ -83,7 +84,6 @@ class Server {
 
             // 2. CORS (Siempre debe ir de los primeros)
             this.app.use(cors(corsOptions));
-
             // 3. Lectura y parseo del Body (SOLO UNO)
             // Importante: Debe ir ANTES de las rutas y del limitador si este analiza contenido
             this.app.use(express.json({ limit: '50mb' })); 
