@@ -5,8 +5,8 @@
   "description": "app votos onleline, creada con fines ademicos no comerciales",
   "main": "app.js",
   "scripts": {
-    "start": "pnpm start",
-    "dev": "nodemon   app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Richard Lipa",
   "license": "MIT",
