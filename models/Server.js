@@ -22,13 +22,29 @@ import routerAuth from '../routes/auth.js';
 
 const allowedOrigins = [
   'https://votalibre.netlify.app',
-  'https://app-votar-2025-orpin.vercel.app',
-  'http://localhost:4000',
-  'http://localhost:5000',
-  'http://localhost:3000'
+  'https://app-votar-2025.vercel.app',
+  'http://localhost:3000' // Next.js por defecto usa el 3000
 ];
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Si no hay origin (como curl normal o Postman), permitir
+    if (!origin) return callback(null, true);
 
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // Importante: null en el primer parámetro para que Express no explote
+      // false en el segundo para que el navegador bloquee el CORS
+      callback(null, false);
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  credentials: true,
+  optionsSuccessStatus: 200 
+};
+
+/* 
 // Configuración de CORS
 const corsOptions = {
     origin: function (origin, callback) {
@@ -48,7 +64,7 @@ const corsOptions = {
     credentials: true, // Si tu frontend necesita enviar cookies o encabezados de autorización con credenciales
     optionsSuccessStatus: 204 // Para pre-vuelos OPTIONS
 };
-
+ */
 
       //fin cors
 
@@ -80,7 +96,7 @@ class Server {
 
           middlewares() {
             // 1. Crear admin (Ejecutar lógica antes de configurar tráfico si es necesario)
-            crearUserdmin();
+            //crearUserdmin();
 
             // 2. CORS (Siempre debe ir de los primeros)
             this.app.use(cors(corsOptions));
