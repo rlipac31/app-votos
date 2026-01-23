@@ -19,6 +19,7 @@ import routerAuth from '../routes/auth.js';
 // Es crucial que esta URL sea EXACTA (incluyendo http/https, www, puerto si lo tiene).
 // Puedes obtenerla de una variable de entorno para mayor flexibilidad en diferentes entornos (desarrollo, producción).
 const allowedOrigins = [
+  'https://votalibre.netlify.app/'
   `https://app-votar-2025-orpin.vercel.app/`, // index
    `https://app-votos-cnnb.onrender.com/api/candidatos/`,//lista candidatos
    `https://app-votos-cnnb.onrender.com/api/votos/result-votos`,//lista votos
