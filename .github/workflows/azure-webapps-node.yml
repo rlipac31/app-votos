@@ -15,9 +15,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-
-      - name: Instalar dependencias
-        run: npm install --legacy-peer-deps
+          
+      - script: |
+         npm install --legacy-peer-deps
+         npm run build
+       displayName: 'npm install and build'
 
       - name: Desplegar a Azure Web App
         uses: azure/webapps-deploy@v3
