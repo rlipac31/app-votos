@@ -44,27 +44,7 @@ const corsOptions = {
   optionsSuccessStatus: 200 
 };
 
-/* 
-// Configuración de CORS
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Permite solicitudes sin origen (como las de Postman/Insomnia o solicitudes de archivos locales)
-        // O si el origen de la solicitud está en nuestra lista de orígenes permitidos
-       // if (!origin || allowedOrigins.includes(origin)) {
-         //   callback(null, true); // Permite la solicitud
 
-      if (!origin || allowedOrigins.some(o => origin.startsWith(o))) {
-                  callback(null, true);
-
-        } else {
-            callback(new Error('No permitido por CORS')); // Bloquea la solicitud
-        }
-    },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP permitidos
-    credentials: true, // Si tu frontend necesita enviar cookies o encabezados de autorización con credenciales
-    optionsSuccessStatus: 204 // Para pre-vuelos OPTIONS
-};
- */
 
       //fin cors
 
@@ -108,8 +88,8 @@ class Server {
 
             // 4. Rate Limiter
             const apiLimiter = rateLimit({
-                windowMs: 15 * 60 * 1000,
-                max: 50,
+                windowMs: 20 * 60 * 1000,
+                max: 100,
                 message: 'Demasiadas solicitudes, intenta en 20 minutos'
             });
             this.app.use('/api/', apiLimiter);

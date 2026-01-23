@@ -108,6 +108,7 @@ const nameCandidatos = resultadoVotos.map(candidato => {
 }
 
 export const saveVotos = async (req = request, res = response) => {
+  console.log('entro a guardar voto');
 
   const { candidatoId } = req.params;
   const { identity, localidad } = req.body;
