@@ -19,7 +19,7 @@ import routerAuth from '../routes/auth.js';
 // Es crucial que esta URL sea EXACTA (incluyendo http/https, www, puerto si lo tiene).
 // Puedes obtenerla de una variable de entorno para mayor flexibilidad en diferentes entornos (desarrollo, producción).
 const allowedOrigins = [
-  'https://votalibre.netlify.app/'
+  `https://votalibre.netlify.app/`,
   `https://app-votar-2025-orpin.vercel.app/`, // index
    `https://app-votos-cnnb.onrender.com/api/candidatos/`,//lista candidatos
    `https://app-votos-cnnb.onrender.com/api/votos/result-votos`,//lista votos
@@ -74,35 +74,7 @@ class Server {
       await  dbConnections();
     }
   
-    //Middlewares
-   /*  middlewares(){
-      // Aplica el middleware CORS con tus opciones personalizadas
-      crearUserdmin();
-      //datos  inniciaales
-          //cors
-          this.app.use(cors(corsOptions));
-          //lectura y parseo del body
-          // Configuración del Rate Limiter
-      // Esto limitará cada IP a 100 peticiones en un período de 15 minutos
-       const apiLimiter = rateLimit({
-          windowMs: 15 * 60 * 1000, // 15 minutos
-          max: 50, // Limita cada IP a 100 peticiones por ventana
-          message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo después de 20 minutos'
-      });
-
-
-      
-
-      // Aplica el rate limiter a todas las rutas que empiecen con /api/
-      // Esto significa que tus rutas como /api/auth, /api/usuarios, etc., estarán protegidas.
-
-          this.app.use('/api/', apiLimiter);
-          this.app.use( express.json());
-          this.app.use(bodyParser.json());    
-          this.app.use(bodyParser.urlencoded({ extended: true }));
-          //directorio publico
-          this.app.use( express.static('public'));
-    } */
+   
 
 
           middlewares() {

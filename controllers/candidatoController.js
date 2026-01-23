@@ -18,25 +18,33 @@ cloudinary.config({
 import Candidato from '../models/Candidate.js';
 
 export const listarCandidatos = async (req = request, res = response) => {
-  const { limite = 0, desde = 0 } = req.query;
   const query = { state: true };
-  const [totalCandidatos, candidatos] = await Promise.all([
-    Candidato.countDocuments(query),
-    Candidato.find(query)
-      .skip(Number(desde))
-      .limit(Number(limite))
-  ])
-  try {
 
+  try {
+    // 1. Ejecutamos las consultas a la base de datos
+    const [totalCandidatos, candidatos] = await Promise.all([
+      Candidato.countDocuments(query),
+      Candidato.find(query).lean() // .lean() hace que la consulta sea más rápida al devolver objetos JS planos
+    ]);
+
+    // 2. Mezclamos el array (Algoritmo Fisher-Yates simplificado)
+    // Esto asegura una aleatoriedad real en cada llamada
+    const candidatosAleatorios = candidatos.sort(() => Math.random() - 0.5);
+
+    // 3. Enviamos la respuesta
     res.json({
       totalCandidatos,
-      candidatos
+      candidatos: candidatosAleatorios
     });
+
   } catch (error) {
-    console.log(error)
-    res.json({ msg: error })
+    console.error("Error en listarCandidatos:", error);
+    res.status(500).json({
+      msg: 'Hable con el administrador',
+      error: error.message
+    });
   }
-}
+};
 
 export const guardarCandidatos = async (req = request, res = response) => {
 
