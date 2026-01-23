@@ -3,7 +3,7 @@ name: Deploy a Azure
 on:
   push:
     branches:
-      - main  # Revisa si tu rama se llama 'main' o 'master'
+      - main  # Revisa si tu rama se llama 'main' o 'master'# comentando solo para aplicar cambios
 
 jobs:
   build-and-deploy:
