@@ -16,10 +16,8 @@ jobs:
         with:
           node-version: '22.x'
           
-      - script: |
-         npm install --legacy-peer-deps
-         npm run build
-       displayName: 'npm install and build'
+      - name: Instalar dependencias
+        run: npm install --forcee
 
       - name: Desplegar a Azure Web App
         uses: azure/webapps-deploy@v3
