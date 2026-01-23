@@ -93,11 +93,12 @@ class Server {
     async conexionBD(){
       await  dbConnections();
     }
-
+         
           middlewares() {
             // 1. Crear admin (Ejecutar lógica antes de configurar tráfico si es necesario)
             //crearUserdmin();
-
+             this.app.set('trust proxy', 1);//Esta línea le dice a Express: "Confía en el servidor que tienes delante". activa la lectura al poner valor 1 del Ip del usuario o cliente
+              // Si estás detrás de un proxy (como Heroku, AWS ELB, Nginx, etc.), habilita esta configuración
             // 2. CORS (Siempre debe ir de los primeros)
             this.app.use(cors(corsOptions));
             // 3. Lectura y parseo del Body (SOLO UNO)
