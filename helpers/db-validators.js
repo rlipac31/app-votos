@@ -38,6 +38,7 @@ export const yaVoto = async(identity)=>{
   //validar si email ya existe en laa base de datos
 
   const votoExiste = await Voto.findOne({ identity });
+  console.log("desde helpers voto existe y es ::::  ", votoExiste);
   if( votoExiste ){
     throw new Error(` el DNI: ${identity} ya voto `);
 

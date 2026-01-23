@@ -74,8 +74,8 @@ export const conteoVotos = async (req = request, res = response) => {
               input: "$candidateDetails",
               as: "candidate",
               in: {
-                firstName: "$$candidate.nameCandidato.firstName",
-                paternalSurname: "$$candidate.surname.paternal",
+                nameCandidatos: "$$candidate.nameCandidato",
+                Surname: "$$candidate.surname",
                 candidateImageUrl: "$$candidate.imagen.url"
               }
             }
@@ -88,8 +88,14 @@ export const conteoVotos = async (req = request, res = response) => {
 ]);
 
   let  votosCandidato = resultadoVotos.map(row=>row.totalVotes)
-  let nameCandidatos = resultadoVotos.map(row => row.candidateDetails.firstName)
-
+// Usa map para crear un nuevo array 'listaCandidatos'
+const nameCandidatos = resultadoVotos.map(candidato => {
+    // Para cada candidato, devolvemos un nuevo objeto con el formato deseado
+    return {
+        nombre: candidato.candidateDetails.nameCandidatos,
+        apellido: candidato.candidateDetails.Surname
+    };
+});
 
   res.status(200).json({
     votosCandidato,

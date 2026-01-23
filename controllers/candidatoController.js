@@ -166,7 +166,7 @@ export const candidatoId = async (req, res) => {
   try {
 
     const candidato = await Candidato.findById(id)
-    console.log(candidato);
+  //  console.log(candidato);
 
     res.json({ candidato });
   } catch (error) {

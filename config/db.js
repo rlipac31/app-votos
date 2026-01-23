@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
 
   try {
 
-    await mongoose.connect( process.env.CONECCTION_BD );
-  // await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
+    // await mongoose.connect( process.env.CONECCTION_BD );
+   await mongoose.connect(process.env.CONECCTION_BD_LOCAL);
        
       console.log('se conecto exitosamente LOCAL');    
   } catch (error) {
