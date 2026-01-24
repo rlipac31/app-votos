@@ -40,7 +40,7 @@ export const yaVoto = async(identity)=>{
   const votoExiste = await Voto.findOne({ identity });
   console.log("desde helpers voto existe y es ::::  ", votoExiste);
   if( votoExiste ){
-    throw new Error(` el DNI: ${identity} ya voto `);
+    throw new Error(` el DNI: ${identity} ya voto en este periodo de la encuesta, pronto se habilitara otro periodo de encuesta`);
 
   }
 }

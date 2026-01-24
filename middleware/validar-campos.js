@@ -21,16 +21,10 @@ export const validarCampos = ( req, res, next )=>{
       
     // 2. Comprueba si el objeto está vacío usando isEmpty()
     if(!validationErrors.isEmpty()){
-        console.log("errores de validacion de campos ::: ",  validationErrors);
-
         // 3. Convierte el objeto a un array de errores
         const errorsArray = validationErrors.array(); 
-        
         // 4. Accede al primer elemento del array y a su propiedad 'msg'
         const mensageError = errorsArray[0].msg; 
-        
-        console.log("mensaje de error es ::: ",  mensageError);
-        
         // Devuelve la respuesta, incluyendo el array completo de errores si lo deseas
         return res.status(400).json({ 
             errors: errorsArray, 

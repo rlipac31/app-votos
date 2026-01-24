@@ -89,7 +89,7 @@ class Server {
             // 4. Rate Limiter
             const apiLimiter = rateLimit({
                 windowMs: 20 * 60 * 1000,
-                max: 100,
+                max: 200,
                 message: 'Demasiadas solicitudes, intenta en 20 minutos'
             });
             this.app.use('/api/', apiLimiter);
@@ -99,7 +99,7 @@ class Server {
         }
     //llamando a las rutass
     routes(){
-      crearUserdmin();
+     // crearUserdmin();
       this.app.use( this.usuariosPath, routerUsuarios); 
       this.app.use( this.authPath, routerAuth)
       this.app.use( this.candidatosPath, routerCandidatos);

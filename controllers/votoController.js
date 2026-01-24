@@ -1,4 +1,8 @@
 import { request, response } from 'express';
+// has para enpriptar dni
+
+
+import bcryptjs from 'bcryptjs';
 
 // importando Modelo
 
@@ -6,7 +10,7 @@ import { request, response } from 'express';
 import Voto from '../models/Voto.js';
 import Candidato from '../models/Candidate.js';
 
-//const { consultarDNI }= require('../middleware/consultarDNI')
+import  { consultarDNI } from '../middleware/consultarDNI.js';
 
 export const listarVotos = async (req = request, res = response) => {
 
@@ -113,19 +117,20 @@ export const saveVotos = async (req = request, res = response) => {
   const { candidatoId } = req.params;
   const { identity, localidad } = req.body;
   try {
+    if (typeof identity !== 'string' || !/^\d{8}$/.test(identity)) {
+      return res.status(400).json({ msg: 'DNI inválido. Debe ser una cadena de exactamente 8 dígitos.' });
+    }
   // Ejemplo de uso:// servicio caido
-  /*   const dniValido = await consultarDNI(identity)//valida desde uuna api externa si el dni existe o nos
-        .then(data => console.log(data))
-        .catch(err => res.status(403).json({
-            msg: err
-          }) );
-        if(!dniValido || !dniValido.nombres){
-          return res.status(403).json({
-            msg:"Inggresa un DNI Real"
-          })
-        } */
+     const dniValido = await consultarDNI(identity)//valida desde uuna api externa si el dni existe o nos
       
-  const voto = new Voto({ identity, localidad, candidatoId });
+        if(!dniValido.success){
+        //  console.log('DNI no valido', dniValido.success);
+          return res.status(403).json({
+            msg:"Ingresa un DNI Real"
+          })
+        } 
+        const voto = new Voto({identity, localidad, candidatoId });
+
     const votacion = await voto.save();
     if (votacion) {
     return  res.json({
@@ -136,7 +141,7 @@ export const saveVotos = async (req = request, res = response) => {
     return  res.status(401).json({
         msg: 'no se pudo guardar'
       })
-    }
+    } 
   } catch (error) {
   return  console.log(error)
     //res.json({ msg: 'Error NO se guardo en la bd' })
